@@ -18,7 +18,7 @@ let snake = [
     new BodyPart(0, 340),
     new BodyPart(0, 360),
     new BodyPart(0, 380)
-];  
+];
 
 const move = {
     up: true,
@@ -141,28 +141,25 @@ function gameStart() {
     if (play) {
         // console.log(snake);
         moveOn(direction);
-        collision();
+        wallsCollision();
         lkpMove();
-
+        
+        appleEaten();
         updatePose();
 
         lkpUpdate();
-        createApple();
-    }
-}
+        //createApple();
+    };
+};
 
-function collision() {
+function wallsCollision() {
     const snakeHead = snake[0];
-    // console.log(snakeHead.y);
-
-
-    if (snakeHead.y <= 0 || snakeHead.y > 383 || snakeHead.x < 0 || snakeHead.x > 484) {
+    if (snakeHead.y < 0 || snakeHead.y > 380 ||
+        snakeHead.x < 0 || snakeHead.x > 380) {
 
         gameOver();
-
-        return;
-    }
-}
+    };
+};
 
 function gameOver() {
     play = false;
@@ -178,31 +175,46 @@ function gameOver() {
 
 }
 
-let num = 0;
+
+let appleX = 3, appleY = 3;
 function createApple() {
-    let appleX = 3, appleY = 3;
+    appleX = 3;
+     appleY = 3;
     let gameSpace = document.querySelector("#gameSpace");
-    // let apple = { x: 0, y: 0 };
     let apple = document.createElement("span");
     gameSpace.appendChild(apple);
     apple.classList.add("appleStyle");
 
-    while (appleX % 20 != 0 && appleY % 20 != 0 && num < 5) {
+    while (appleX % 20 != 0 || appleY % 20 != 0) {
         appleX = Math.floor(Math.random() * 380);
         appleY = Math.floor(Math.random() * 380);
     }
 
     apple.style.left = appleX + "px";
     apple.style.top = appleY + "px";
-    num++;
 
-    console.log("x: " + appleX,"y: " + appleY)
-
-    
-    
-
-
-
-
+    console.log("x: " + appleX, "y: " + appleY)
 }
 createApple();
+
+function appleEaten(){
+    let snakeHead = snake[0];
+
+    if(snakeHead.x == appleX && snakeHead.y == appleY){
+        console.log("yam!");
+        let newX = snake[snake.length-1].lkpX;
+        let newY = snake[snake.length-1].lkpY;
+        snake.push(new BodyPart(newX, newY));
+        let gameSpace = document.querySelector("#gameSpace");
+        let newPart = document.createElement("div");
+
+        gameSpace.appendChild(newPart);
+
+        let apple = gameSpace.querySelector("span");
+        gameSpace.removeChild(apple);
+        createApple();
+    };
+
+    
+
+}
