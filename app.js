@@ -36,14 +36,11 @@ function updatePose() {
         divs[index].style.left = (snake[index].x) + "px";
         divs[index].style.top = (snake[index].y) + "px";
 
-
-        // console.log(divs[index].innerText + "- x: " + divs[index].offsetLeft, "y: " + divs[index].offsetTop);
-    }
-}
-
+    };
+};
 
 updatePose();
-//--------------------------------------------------------------------
+
 
 function lkpUpdate() {
 
@@ -52,45 +49,38 @@ function lkpUpdate() {
 
         element.lkpX = snake[index - 1].x;
         element.lkpY = snake[index - 1].y;
-    }
-}
+    };
+};
 
 lkpUpdate();
 
 function inputHandler(event) {
 
     //move up
-    if (event.keyCode == 38 && move.up == true) {
+    if (event.keyCode == 38 && move.up) {
 
         direction = "up";
-        // console.log(direction + "key");
-
-    }
+    };
     //move right
-    if (event.keyCode == 39 && move.right == true) {
+    if (event.keyCode == 39 && move.right) {
 
         direction = "right";
-        // console.log(direction + "key");
-
-    }
+    };
     //move left
-    if (event.keyCode == 37 && move.left == true) {
+    if (event.keyCode == 37 && move.left) {
 
         direction = "left";
-        // console.log(direction + "key");
-
-    }
+    };
     //move down
-    if (event.keyCode == 40 && move.down == true) {
+    if (event.keyCode == 40 && move.down) {
+
         direction = "down";
-        // console.log(direction + "key");
+    };
 
-    }
-
-}
+};
 
 function moveOn(direction) {
-    //console.log(direction + " func");
+
     if (direction == "up") {
         snake[0].y -= step;
         move.up = true;
@@ -98,30 +88,30 @@ function moveOn(direction) {
         move.down = false;
         move.left = true;
 
-    }
+    };
     if (direction == "right") {
         snake[0].x += step;
         move.up = true;
         move.right = true;
         move.down = true;
         move.left = false;
-    }
+    };
     if (direction == "left") {
         snake[0].x -= step;
         move.up = true;
         move.right = false;
         move.down = true;
         move.left = true;
-    }
+    };
     if (direction == "down") {
         snake[0].y += step;
         move.up = false;
         move.right = true;
         move.down = true;
         move.left = true;
-    }
+    };
 
-}
+};
 
 function lkpMove() {
 
@@ -130,30 +120,35 @@ function lkpMove() {
 
         element.x = element.lkpX;
         element.y = element.lkpY;
-    }
+    };
 
-}
-
+};
 
 
 
 function gameStart() {
     if (play) {
-        // console.log(snake);
+
         moveOn(direction);
-        wallsCollision();
+        detectCollision();
         lkpMove();
-        
         appleEaten();
         updatePose();
-
         lkpUpdate();
-        //createApple();
     };
 };
 
-function wallsCollision() {
+function detectCollision() {
     const snakeHead = snake[0];
+
+    for (let index = 1; index < snake.length; index++) {
+        const bodyPart = snake[index];
+        if (snakeHead.x == bodyPart.x &&
+            snakeHead.y == bodyPart.y) {
+            gameOver();
+        };
+    };
+
     if (snakeHead.y < 0 || snakeHead.y > 380 ||
         snakeHead.x < 0 || snakeHead.x > 380) {
 
@@ -171,39 +166,47 @@ function gameOver() {
     h1.style.textAlign = "center";
     abaSpan.style.backgroundColor = "rgba(0,0,0,0.5)";
     abaSpan.appendChild(h1);
-    // console.log(snake);
-
-}
+};
 
 
-let appleX = 3, appleY = 3;
+let appleX, appleY;
 function createApple() {
     appleX = 3;
-     appleY = 3;
+    appleY = 3;
     let gameSpace = document.querySelector("#gameSpace");
     let apple = document.createElement("span");
     gameSpace.appendChild(apple);
     apple.classList.add("appleStyle");
 
-    while (appleX % 20 != 0 || appleY % 20 != 0) {
+    let arrX = [], arrY = [];
+    for (let index = 0; index < snake.length; index++) {
+        arrX[index] = snake[index].x;
+        arrY[index] = snake[index].y;
+    };
+
+
+
+    while (
+        (appleX % 20 != 0 || appleY % 20 != 0) ||
+        (arrX.includes(appleX) && arrY.includes(appleY))
+    ) {
         appleX = Math.floor(Math.random() * 380);
         appleY = Math.floor(Math.random() * 380);
-    }
+    };
+
 
     apple.style.left = appleX + "px";
     apple.style.top = appleY + "px";
-
-    console.log("x: " + appleX, "y: " + appleY)
-}
+};
 createApple();
 
-function appleEaten(){
+function appleEaten() {
     let snakeHead = snake[0];
 
-    if(snakeHead.x == appleX && snakeHead.y == appleY){
+    if (snakeHead.x == appleX && snakeHead.y == appleY) {
         console.log("yam!");
-        let newX = snake[snake.length-1].lkpX;
-        let newY = snake[snake.length-1].lkpY;
+        let newX = snake[snake.length - 1].lkpX;
+        let newY = snake[snake.length - 1].lkpY;
         snake.push(new BodyPart(newX, newY));
         let gameSpace = document.querySelector("#gameSpace");
         let newPart = document.createElement("div");
@@ -214,7 +217,6 @@ function appleEaten(){
         gameSpace.removeChild(apple);
         createApple();
     };
+};
 
-    
 
-}
