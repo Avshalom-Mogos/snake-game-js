@@ -17,7 +17,6 @@ div {
 	position: absolute;
 	text-align: center;
 	box-sizing: border-box;
-	border: 1px solid black;
 }
 
 .appleStyle {
@@ -28,3 +27,14 @@ div {
 	position: absolute;
 	box-sizing: border-box;
 }
+
+h1{
+    color:white;
+    text-align: center;
+}
+
+.gameOver{
+    
+    background-color: rgba(0,0,0,0.5);
+};
+

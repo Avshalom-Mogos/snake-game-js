@@ -1,7 +1,12 @@
-let body = document.querySelector("body");
-body.onkeyup = function (e) { inputHandler(e) };
+const body = document.querySelector("body");
+const gameSpace = document.querySelector("#gameSpace");
+const gameWidth = gameSpace.offsetWidth -10; //  - border 5px + 5px
+const gameHeight = gameSpace.offsetHeight -10; //  - border 5px + 5px
+
+
+body.onkeydown = function (e) { inputHandler(e) };
 let direction = "up";
-let play = true;
+let gameOn = true;
 const step = 20;
 
 function BodyPart(x, y, lkpX, lkpY) {
@@ -127,7 +132,7 @@ function lkpMove() {
 
 
 function gameStart() {
-    if (play) {
+    if (gameOn) {
 
         moveOn(direction);
         detectCollision();
@@ -140,7 +145,8 @@ function gameStart() {
 
 function detectCollision() {
     const snakeHead = snake[0];
-
+    const snakeHeadSize = document.querySelector("div").offsetWidth;
+    
     for (let index = 1; index < snake.length; index++) {
         const bodyPart = snake[index];
         if (snakeHead.x == bodyPart.x &&
@@ -149,31 +155,30 @@ function detectCollision() {
         };
     };
 
-    if (snakeHead.y < 0 || snakeHead.y > 380 ||
-        snakeHead.x < 0 || snakeHead.x > 380) {
+    if (snakeHead.y < 0 || snakeHead.y > gameHeight - snakeHeadSize ||
+        snakeHead.x < 0 || snakeHead.x > gameWidth - snakeHeadSize) {
 
         gameOver();
     };
 };
 
 function gameOver() {
-    play = false;
-    let abaSpan = document.querySelector("span");
-    abaSpan.style.borderColor = "red";
+    gameOn = false;
+    gameSpace.classList.add("gameOver")
+    
     let h1 = document.createElement("h1");
-    h1.style.color = "white";
     h1.textContent = "GAME OVER!";
-    h1.style.textAlign = "center";
-    abaSpan.style.backgroundColor = "rgba(0,0,0,0.5)";
-    abaSpan.appendChild(h1);
+    gameSpace.appendChild(h1);
 };
 
 
 let appleX, appleY;
 function createApple() {
+    const snakeHeadSize = document.querySelector("div").offsetWidth;
+
     appleX = 3;
     appleY = 3;
-    let gameSpace = document.querySelector("#gameSpace");
+
     let apple = document.createElement("span");
     gameSpace.appendChild(apple);
     apple.classList.add("appleStyle");
@@ -190,8 +195,8 @@ function createApple() {
         (appleX % 20 != 0 || appleY % 20 != 0) ||
         (arrX.includes(appleX) && arrY.includes(appleY))
     ) {
-        appleX = Math.floor(Math.random() * 380);
-        appleY = Math.floor(Math.random() * 380);
+        appleX = Math.floor(Math.random() * (gameWidth - snakeHeadSize));
+        appleY = Math.floor(Math.random() * (gameHeight - snakeHeadSize));
     };
 
 
@@ -200,23 +205,64 @@ function createApple() {
 };
 createApple();
 
+
+
 function appleEaten() {
     let snakeHead = snake[0];
 
     if (snakeHead.x == appleX && snakeHead.y == appleY) {
-        console.log("yam!");
+    
         let newX = snake[snake.length - 1].lkpX;
         let newY = snake[snake.length - 1].lkpY;
         snake.push(new BodyPart(newX, newY));
-        let gameSpace = document.querySelector("#gameSpace");
         let newPart = document.createElement("div");
 
         gameSpace.appendChild(newPart);
 
         let apple = gameSpace.querySelector("span");
-        gameSpace.removeChild(apple);
+        apple.remove();
         createApple();
     };
+};
+
+
+function gameRestart() {
+
+    let h1 = document.querySelector("h1");
+    let divs = document.querySelectorAll("div");
+
+    
+    if (divs.length > 5) {
+        for (let index = 4; index < divs.length; index++) {
+            const element = divs[index];
+            
+            gameSpace.removeChild(element);
+            
+        };
+    };
+
+    gameSpace.classList.remove("gameOver");
+    h1.remove();
+    direction = "up"
+    let apple = gameSpace.querySelector("span");
+    gameSpace.removeChild(apple);
+
+
+    snake = [
+        new BodyPart(0, 300),
+        new BodyPart(0, 320),
+        new BodyPart(0, 340),
+        new BodyPart(0, 360),
+        new BodyPart(0, 380)
+    ];
+
+
+    updatePose();
+    createApple();
+    lkpUpdate();
+
+    gameOn = true;
+
 };
 
 
