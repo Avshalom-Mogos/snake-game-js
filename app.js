@@ -2,7 +2,9 @@ const body = document.querySelector("body");
 const gameSpace = document.querySelector("#gameSpace");
 const gameWidth = gameSpace.offsetWidth - 40; //  - border 5px + 5px
 const gameHeight = gameSpace.offsetHeight - 40; //  - border 5px + 5px
+let score = 0;
 
+console.log(body.offsetWidth)
 
 
 body.onkeydown = function (e) { inputHandler(e) };
@@ -18,11 +20,11 @@ function BodyPart(x, y, lkpX, lkpY) {
 };
 
 let snake = [
-    new BodyPart(0, 300),
-    new BodyPart(0, 320),
-    new BodyPart(0, 340),
-    new BodyPart(0, 360),
-    new BodyPart(0, 380)
+    new BodyPart(0, gameHeight - (step * 5)),
+    new BodyPart(0, gameHeight - (step * 4)),
+    new BodyPart(0, gameHeight - (step * 3)),
+    new BodyPart(0, gameHeight - (step * 2)),
+    new BodyPart(0, gameHeight - step)
 ];
 
 const move = {
@@ -51,7 +53,7 @@ function updatePose() {
 
 updatePose();
 
-
+//give every bodypart the Last Known Position
 function lkpUpdate() {
 
     for (let index = 1; index < snake.length; index++) {
@@ -64,6 +66,7 @@ function lkpUpdate() {
 
 lkpUpdate();
 
+//handle user keypress input
 function inputHandler(event) {
 
     let head = document.querySelector("#head");
@@ -95,6 +98,7 @@ function inputHandler(event) {
 
 };
 
+//move snake head one step to direction
 function moveOn(direction) {
 
     if (direction == "up") {
@@ -129,6 +133,7 @@ function moveOn(direction) {
 
 };
 
+//move bodyparts to last known position
 function lkpMove() {
 
     for (let index = 1; index < snake.length; index++) {
@@ -140,8 +145,7 @@ function lkpMove() {
 
 };
 
-
-
+//Game loop
 function gameStart() {
     if (gameState.running) {
 
@@ -154,6 +158,7 @@ function gameStart() {
     };
 };
 
+//detect coliision with body and walls
 function detectCollision() {
     const snakeHead = snake[0];
     const snakeHeadSize = document.querySelector("div").offsetWidth;
@@ -175,6 +180,7 @@ function detectCollision() {
     };
 };
 
+//stop game and show game over message
 function gameOver() {
     gameState.over = true;
     gameState.running = false
@@ -185,7 +191,7 @@ function gameOver() {
     gameSpace.appendChild(h1);
 };
 
-
+//create new apple
 let appleX, appleY;
 function createApple() {
     const snakeHeadSize = document.querySelector("div").offsetWidth;
@@ -220,7 +226,7 @@ function createApple() {
 createApple();
 
 
-
+//add new bodypart when apple was eaten
 function appleEaten() {
     let snakeHead = snake[0];
 
@@ -234,12 +240,20 @@ function appleEaten() {
         gameSpace.appendChild(newPart);
 
         let apple = gameSpace.querySelector("span");
+        addAndUpdateScore();
         apple.remove();
         createApple();
     };
 };
 
+//add 10 points and update score 
+function addAndUpdateScore() {
+    const scoreDisplay = document.querySelector("#scoreDisplay");
+    score += 10;
+    scoreDisplay.textContent = score;
+};
 
+//restart game
 function gameRestart() {
 
     if (gameState.over) {
@@ -249,7 +263,7 @@ function gameRestart() {
 
 
         if (divs.length > 5) {
-            for (let index = 4; index < divs.length; index++) {
+            for (let index = 5; index < divs.length; index++) {
                 const element = divs[index];
 
                 gameSpace.removeChild(element);
@@ -263,13 +277,16 @@ function gameRestart() {
         let apple = gameSpace.querySelector("span");
         gameSpace.removeChild(apple);
 
+        score = -10;
+        addAndUpdateScore();
+
 
         snake = [
-            new BodyPart(0, 300),
-            new BodyPart(0, 320),
-            new BodyPart(0, 340),
-            new BodyPart(0, 360),
-            new BodyPart(0, 380)
+            new BodyPart(0, gameHeight - (step * 5)),
+            new BodyPart(0, gameHeight - (step * 4)),
+            new BodyPart(0, gameHeight - (step * 3)),
+            new BodyPart(0, gameHeight - (step * 2)),
+            new BodyPart(0, gameHeight - step)
         ];
 
 
@@ -279,7 +296,7 @@ function gameRestart() {
 
         gameState.over = false;
         gameState.running = true;
-    }
+    };
 
 };
 

@@ -11,17 +11,21 @@
 
 <body>
 
-    <button onclick="setInterval(function(){gameStart()},100)">START</button>
-    <button onclick="gameRestart()">RESTART</button>
 
-    <span id="gameSpace">
-        <div id="head"></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div id="tail"></div>
+    <span id="container">
+        <button id="startBtn" onclick="setInterval(function(){gameStart()},100)">START</button>
+        <button id="restartBtn" onclick="gameRestart()">RESTART</button>
+        <p>Score:
+            <p id="scoreDisplay">0</p>
+        </p>
+        <span id="gameSpace">
+            <div id="head"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div id="tail"></div>
+        </span>
     </span>
-
     <script src="app.js"></script>
 </body>
 
