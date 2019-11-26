@@ -2,41 +2,23 @@ body{
 background-color:black;
 }
 
-#container{
-	max-width: 440px;
-	width: 100%;
-	height: 480px;
+#header{
+	width: 440px;
+	height: auto;
 	margin:0 auto;
-	display: block;
-	
-}
-
-#restartBtn{
-	float:right;
-	background-color:black;
-}
-
-#startBtn, #restartBtn{
-	background-color:black;
-	color: red;
+	display: flex;
+	justify-content: space-between;
 }
 
 #gameSpace {
 	margin: 0 auto;
 	display: block;
 	max-width: 400px;
-	width:100%;
+	width: 400px;
 	height: 400px;
 	border: 20px double red;
 	position: relative;
-	background-color: transparent;
 }
-
-@media only screen and (width: 600px) {
-	body {
-	  background-color: lightblue;
-	}
-  }
 
 div {
 	width: 20px;
@@ -46,6 +28,7 @@ div {
 	text-align: center;
 	box-sizing: border-box;
 	border:1px solid red;
+	z-index: -1;
 	
 }
 
@@ -59,31 +42,67 @@ div {
 	border-radius: 15px;
 }
 
-#head{
+#snakeHead{
 	background-image: url(img/head.png);
 	background-size: 20px 20px;
 }
 
 h1{
-    color:red;
-    text-align: center;
+	color:black;
+	text-align: center;
+	/* text-shadow:0px 0px 5px  yellow; */
+	background-color: red;
 }
 
 p{
 	color: white;
 	display: inline;
 	font-size: 18px;
-
 }
 
-p:first-of-type {
-	margin-left: 100px;
+#btnContainer{
+	display: block;
+	width: 440px;
+	margin: 10px auto 0 auto;
+	height: auto;
+}
+
+#header button{
+	margin: auto 0;
+	padding: 10px;
+}
+
+#btnContainer button{
+	font-size: 200%;
+	height: 100%;
+}
+
+#spanUpBtn, #spanDownBtn{ 
+	display: block;
+	text-align: center;
+	height: 30%;
+}
+
+#spanLeftRightBtn{
+	display: flex;
+	justify-content: space-around;
+	height: 30%;
 }
 
 
-.gameOver{
-    
-	background-color: rgba(0,0,0,0.5);
-	
-};
+button{
+	width:30%;
+	height: 100%;
+	color:black;
+	background-color: red;
+	border:none;
+}
+
+
+@media  (max-width: 440px) {
+	#gameSpace {width: 300px;height:300px;}
+	#header{width:340px;}
+	#btnContainer{width:340px;}
+}
+
 

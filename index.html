@@ -12,18 +12,35 @@
 <body>
 
 
-    <span id="container">
-        <button id="startBtn" onclick="setInterval(function(){gameStart()},100)">START</button>
-        <button id="restartBtn" onclick="gameRestart()">RESTART</button>
+    <span id="header">
+        <button id="startBtn">START</button>
         <p>Score:
             <p id="scoreDisplay">0</p>
         </p>
-        <span id="gameSpace">
-            <div id="head"></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div id="tail"></div>
+        <button id="restartBtn">RESTART</button>
+    </span>
+    <span id="gameSpace">
+        <div id="snakeHead"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div id="tail"></div>
+    </span>
+
+    <span id="btnContainer">
+        <span id="spanUpBtn">
+             <button onclick="inputHandler(38)">&#x2191;</button>
+             <!--UP-->
+        </span>
+        <span id="spanLeftRightBtn">
+            <button onclick="inputHandler(37)">&#x2190;</button>
+             <!--LEFT-->
+            <button onclick="inputHandler(39)">&#x2192;</button>
+             <!--RIGHT-->
+        </span>
+        <span id="spanDownBtn">
+            <button onclick="inputHandler(40)">&#x2193;</button>
+            <!--DOWN-->
         </span>
     </span>
     <script src="app.js"></script>

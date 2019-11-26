@@ -4,13 +4,26 @@ const gameWidth = gameSpace.offsetWidth - 40; //  - border 5px + 5px
 const gameHeight = gameSpace.offsetHeight - 40; //  - border 5px + 5px
 let score = 0;
 
-console.log(body.offsetWidth)
+
+//add events to start and restart buttons
+const startBtn = document.querySelector("#startBtn");
+const restartBtn = document.querySelector("#restartBtn");
+
+startBtn.onclick = function () {
+    gameStart();
+    this.textContent = "FASTER!";
+};
+
+restartBtn.onclick = function () { gameRestart() };
 
 
+
+//catch key press
 body.onkeydown = function (e) { inputHandler(e) };
 let direction = "up";
 const step = 20;
 
+//snake function constructor 
 function BodyPart(x, y, lkpX, lkpY) {
 
     this.x = x;
@@ -19,6 +32,7 @@ function BodyPart(x, y, lkpX, lkpY) {
     this.lkpY = lkpY;
 };
 
+//snake initial position
 let snake = [
     new BodyPart(0, gameHeight - (step * 5)),
     new BodyPart(0, gameHeight - (step * 4)),
@@ -34,12 +48,13 @@ const move = {
     left: true
 };
 
+
 const gameState = {
     running: true,
     over: false
 };
 
-
+//update divs position on the dom
 function updatePose() {
 
     let divs = document.querySelectorAll("div");
@@ -69,28 +84,26 @@ lkpUpdate();
 //handle user keypress input
 function inputHandler(event) {
 
-    let head = document.querySelector("#head");
-
     //move up
-    if (event.keyCode == 38 && move.up) {
+    if ((event.keyCode == 38 || event == 38) && move.up) {
 
         direction = "up";
 
     };
     //move right
-    if (event.keyCode == 39 && move.right) {
+    if ((event.keyCode == 39 || event == 39) && move.right) {
 
         direction = "right";
 
     };
     //move left
-    if (event.keyCode == 37 && move.left) {
+    if ((event.keyCode == 37 || event == 37) && move.left) {
 
         direction = "left";
 
     };
     //move down
-    if (event.keyCode == 40 && move.down) {
+    if ((event.keyCode == 40 || event == 40) && move.down) {
 
         direction = "down";
 
@@ -147,15 +160,19 @@ function lkpMove() {
 
 //Game loop
 function gameStart() {
-    if (gameState.running) {
 
-        moveOn(direction);
-        detectCollision();
-        lkpMove();
-        appleEaten();
-        updatePose();
-        lkpUpdate();
-    };
+    const gameloop = setInterval(() => {
+        if (gameState.running) {
+            moveOn(direction);
+            detectCollision();
+            lkpMove();
+            appleEaten();
+            updatePose();
+            lkpUpdate();
+        } else {
+            clearInterval(gameloop);
+        };
+    }, 150)
 };
 
 //detect coliision with body and walls
@@ -184,7 +201,7 @@ function detectCollision() {
 function gameOver() {
     gameState.over = true;
     gameState.running = false
-    gameSpace.classList.add("gameOver");
+
 
     let h1 = document.createElement("h1");
     h1.textContent = "GAME OVER!";
@@ -271,7 +288,6 @@ function gameRestart() {
             };
         };
 
-        gameSpace.classList.remove("gameOver");
         h1.remove();
         direction = "up"
         let apple = gameSpace.querySelector("span");
@@ -296,6 +312,7 @@ function gameRestart() {
 
         gameState.over = false;
         gameState.running = true;
+        gameStart();
     };
 
 };
