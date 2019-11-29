@@ -114,36 +114,42 @@ function inputHandler(event) {
 //move snake head one step to direction
 function moveOn(direction) {
 
-    if (direction == "up") {
-        snake[0].y -= step;
-        move.up = true;
-        move.right = true;
-        move.down = false;
-        move.left = true;
+    switch (direction) {
+
+        case "up":
+
+            snake[0].y -= step;
+            move.up = true;
+            move.right = true;
+            move.down = false;
+            move.left = true;
+            break;
+
+        case "right":
+            snake[0].x += step;
+            move.up = true;
+            move.right = true;
+            move.down = true;
+            move.left = false;
+            break;
+
+        case "left":
+            snake[0].x -= step;
+            move.up = true;
+            move.right = false;
+            move.down = true;
+            move.left = true;
+            break;
+
+        case "down":
+            snake[0].y += step;
+            move.up = false;
+            move.right = true;
+            move.down = true;
+            move.left = true;
+            break;
 
     };
-    if (direction == "right") {
-        snake[0].x += step;
-        move.up = true;
-        move.right = true;
-        move.down = true;
-        move.left = false;
-    };
-    if (direction == "left") {
-        snake[0].x -= step;
-        move.up = true;
-        move.right = false;
-        move.down = true;
-        move.left = true;
-    };
-    if (direction == "down") {
-        snake[0].y += step;
-        move.up = false;
-        move.right = true;
-        move.down = true;
-        move.left = true;
-    };
-
 };
 
 //move bodyparts to last known position
@@ -251,9 +257,9 @@ function appleEaten() {
     let snakeHead = snake[0];
 
     if (snakeHead.x == appleX && snakeHead.y == appleY) {
-        
+
         eatSound.play();
-        
+
         let newX = snake[snake.length - 1].lkpX;
         let newY = snake[snake.length - 1].lkpY;
         snake.push(new BodyPart(newX, newY));
