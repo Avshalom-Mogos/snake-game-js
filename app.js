@@ -213,6 +213,16 @@ function gameOver() {
     let h1 = document.createElement("h1");
     h1.textContent = "GAME OVER!";
     gameSpace.appendChild(h1);
+
+
+    let h4Container = document.createElement("span");
+    h4Container.classList.add("h4Container");
+
+    let h4 = document.createElement("h4");
+    h4.textContent = "- Game created by Avshalom Mogos 2019 -";
+    h4Container.appendChild(h4);
+
+    gameSpace.appendChild(h4Container);
 };
 
 //create new apple
@@ -287,6 +297,7 @@ function gameRestart() {
     if (gameState.over) {
 
         let h1 = document.querySelector("h1");
+        let h4Container = document.querySelector(".h4Container");
         let divs = document.querySelectorAll("div");
 
 
@@ -300,6 +311,8 @@ function gameRestart() {
         };
 
         h1.remove();
+        h4Container.remove();
+        
         direction = "up"
         let apple = gameSpace.querySelector("span");
         gameSpace.removeChild(apple);
