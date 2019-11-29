@@ -172,7 +172,7 @@ function gameStart() {
         } else {
             clearInterval(gameloop);
         };
-    }, 150)
+    }, 125)
 };
 
 //detect coliision with body and walls
@@ -199,6 +199,7 @@ function detectCollision() {
 
 //stop game and show game over message
 function gameOver() {
+    gameoverSound.play();
     gameState.over = true;
     gameState.running = false
 
@@ -245,10 +246,14 @@ createApple();
 
 //add new bodypart when apple was eaten
 function appleEaten() {
+
+
     let snakeHead = snake[0];
 
     if (snakeHead.x == appleX && snakeHead.y == appleY) {
-
+        
+        eatSound.play();
+        
         let newX = snake[snake.length - 1].lkpX;
         let newY = snake[snake.length - 1].lkpY;
         snake.push(new BodyPart(newX, newY));
@@ -316,5 +321,25 @@ function gameRestart() {
     };
 
 };
+
+//--------------------------------------------------------------------
+//AUDIO 
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function () {
+        this.sound.play();
+    }
+    this.stop = function () {
+        this.sound.pause();
+    }
+}
+
+const eatSound = new sound("sounds/appleEaten.wav");
+const gameoverSound = new sound("sounds/gameover.wav");
 
 
