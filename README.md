@@ -7,13 +7,13 @@ Snake game
 - JavaScript
 
 ## Illustration
-<img src="https://raw.githubusercontent.com/Avshalom-Mogos/the-book-shelf-MERN/master/readmeIMG.JPG" width="500"/>
+<img src="https://raw.githubusercontent.com/Avshalom-Mogos/snake-game-js/master/readmeIMG.JPG" width="500"/>
 
 ## How to use?
-- click on the Space on the keyboard to start the game and to make the bird fly
-- you needs to pass the pipes without touching them
+- Click the arrow buttons on screen or use the arrow keys on the keyboard
+- Eat the apples to make the snake grow!
 
 ## Functionalities
-Restet the game, start the game,
-make the game faster
-make the bird fly
+- Restet the game, start the game,
+- Make the game faster
+- Move the snake
