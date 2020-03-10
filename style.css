@@ -1,12 +1,12 @@
-body{
-background-color:black;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+body {
+	background-color: black;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-#header{
+#header {
 	width: 440px;
 	height: auto;
-	margin:0 auto;
+	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
 }
@@ -28,9 +28,8 @@ div {
 	position: absolute;
 	text-align: center;
 	box-sizing: border-box;
-	border:1px solid red;
+	border: 1px solid red;
 	z-index: -1;
-	
 }
 
 .appleStyle {
@@ -43,81 +42,84 @@ div {
 	border-radius: 15px;
 }
 
-#snakeHead{
+#snakeHead {
 	background-image: url(img/head.png);
 	background-size: 20px 20px;
 }
 
-h1{
-	color:black;
+h1 {
+	color: black;
 	text-align: center;
 	background-color: red;
 }
 
-.h4Container{
+.h4Container {
 	display: block;
 	position: absolute;
-	bottom:0px;
+	bottom: 0px;
 	width: 100%;
 }
 
-h4{
-	color:yellow;
+h4 {
+	color: yellow;
 	text-align: center;
 	margin: 0;
 	font-size: 13px;
 }
 
-p{
+p {
 	color: white;
 	display: inline;
 	font-size: 18px;
 }
 
-#btnContainer{
+#btnContainer {
 	display: block;
 	width: 440px;
 	margin: 10px auto 0 auto;
 	height: auto;
 }
 
-#header button{
+#header button {
 	margin: auto 0;
 	padding: 10px;
 }
 
-#btnContainer button{
+#btnContainer button {
 	font-size: 200%;
 	height: 100%;
 }
 
-#spanUpBtn, #spanDownBtn{ 
+#spanUpBtn,
+#spanDownBtn {
 	display: block;
 	text-align: center;
 	height: 30%;
 }
 
-#spanLeftRightBtn{
+#spanLeftRightBtn {
 	display: flex;
 	justify-content: space-around;
 	height: 30%;
 }
 
-
-button{
-	width:30%;
+button {
+	width: 30%;
 	height: 100%;
-	color:black;
+	color: black;
 	background-color: red;
-	border:none;
-	/* font-weight: bold; */
+	border: none;
 }
 
-
-@media  (max-width: 440px) {
-	#gameSpace {width: 300px;height:300px;}
-	#header{width:340px;}
-	#btnContainer{width:340px;}
+@media (max-width: 440px) {
+	#gameSpace {
+		width: 300px;
+		height: 300px;
+	}
+	#header {
+		width: 340px;
+	}
+	#btnContainer {
+		width: 340px;
+	}
 }
-
-

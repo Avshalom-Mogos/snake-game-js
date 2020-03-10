@@ -41,6 +41,7 @@ let snake = [
     new BodyPart(0, gameHeight - step)
 ];
 
+//allowed moves
 const move = {
     up: true,
     right: true,
@@ -50,8 +51,9 @@ const move = {
 
 
 const gameState = {
-    running: true,
-    over: false
+    current: 1,
+    over: 0,
+    running: 1
 };
 
 //update divs position on the dom
@@ -168,7 +170,7 @@ function lkpMove() {
 function gameStart() {
 
     const gameloop = setInterval(() => {
-        if (gameState.running) {
+        if (gameState.current === gameState.running) {
             moveOn(direction);
             detectCollision();
             lkpMove();
@@ -206,8 +208,7 @@ function detectCollision() {
 //stop game and show game over message
 function gameOver() {
     gameoverSound.play();
-    gameState.over = true;
-    gameState.running = false
+    gameState.current = gameState.over;
 
 
     let h1 = document.createElement("h1");
@@ -294,13 +295,13 @@ function addAndUpdateScore() {
 //restart game
 function gameRestart() {
 
-    if (gameState.over) {
+    if (gameState.current === gameState.over) {
 
         let h1 = document.querySelector("h1");
         let h4Container = document.querySelector(".h4Container");
         let divs = document.querySelectorAll("div");
 
-
+        //remove all divs over the initial 5
         if (divs.length > 5) {
             for (let index = 5; index < divs.length; index++) {
                 const element = divs[index];
@@ -310,23 +311,26 @@ function gameRestart() {
             };
         };
 
+        //remove game over message
         h1.remove();
         h4Container.remove();
-        
+
+        //set initial direction and remove the apple
         direction = "up"
         let apple = gameSpace.querySelector("span");
         gameSpace.removeChild(apple);
 
+        //set score to 0
         score = -10;
         addAndUpdateScore();
 
-
+        //move snake to it's initial position 
         snake = [
-            new BodyPart(0, gameHeight - (step * 5)),
-            new BodyPart(0, gameHeight - (step * 4)),
-            new BodyPart(0, gameHeight - (step * 3)),
-            new BodyPart(0, gameHeight - (step * 2)),
-            new BodyPart(0, gameHeight - step)
+            { x: 0, y: gameHeight - (step * 5) },
+            { x: 0, y: gameHeight - (step * 4) },
+            { x: 0, y: gameHeight - (step * 3) },
+            { x: 0, y: gameHeight - (step * 2) },
+            { x: 0, y: gameHeight - step }
         ];
 
 
@@ -334,8 +338,9 @@ function gameRestart() {
         createApple();
         lkpUpdate();
 
-        gameState.over = false;
-        gameState.running = true;
+        //change game state
+        gameState.current = gameState.running;
+
         gameStart();
     };
 
@@ -358,7 +363,8 @@ function sound(src) {
     }
 }
 
-const eatSound = new sound("sounds/appleEaten.wav");
-const gameoverSound = new sound("sounds/gameover.wav");
+const soundUrl = "https://raw.githubusercontent.com/avshalom-mogos/snake-game-js/master"
+const eatSound = new sound(`${soundUrl}/sounds/appleEaten.wav`);
+const gameoverSound = new sound(`${soundUrl}/sounds/gameover.wav`);
 
 
