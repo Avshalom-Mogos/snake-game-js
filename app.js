@@ -1,8 +1,11 @@
 const body = document.querySelector("body");
 const gameSpace = document.querySelector("#gameSpace");
-const gameWidth = gameSpace.offsetWidth - 40; //  - border 5px + 5px
-const gameHeight = gameSpace.offsetHeight - 40; //  - border 5px + 5px
+const gameWidth = gameSpace.offsetWidth - 40; //  - border 20px + 20px
+const gameHeight = gameSpace.offsetHeight - 40; //  - border 20px + 20px
 let score = 0;
+const step = 20;
+let direction = "up";
+
 
 
 //add events to start and restart buttons
@@ -17,11 +20,8 @@ startBtn.onclick = function () {
 restartBtn.onclick = function () { gameRestart() };
 
 
-
 //catch key press
-body.onkeydown = function (e) { inputHandler(e) };
-let direction = "up";
-const step = 20;
+body.onkeydown = function (e) { inputHandler(e.keyCode) };
 
 //snake function constructor 
 function BodyPart(x, y, lkpX, lkpY) {
@@ -48,7 +48,6 @@ const move = {
     down: false,
     left: true
 };
-
 
 const gameState = {
     current: 1,
@@ -84,31 +83,27 @@ function lkpUpdate() {
 lkpUpdate();
 
 //handle user keypress input
-function inputHandler(event) {
+function inputHandler(keyCode) {
 
     //move up
-    if ((event.keyCode == 38 || event == 38) && move.up) {
+    if (keyCode === 38 && move.up) {
 
         direction = "up";
-
-    };
+    }
     //move right
-    if ((event.keyCode == 39 || event == 39) && move.right) {
+    else if (keyCode === 39 && move.right) {
 
         direction = "right";
-
-    };
+    }
     //move left
-    if ((event.keyCode == 37 || event == 37) && move.left) {
+    else if (keyCode === 37 && move.left) {
 
         direction = "left";
-
-    };
+    }
     //move down
-    if ((event.keyCode == 40 || event == 40) && move.down) {
+    else if (keyCode === 40 && move.down) {
 
         direction = "down";
-
     };
 
 };
@@ -150,7 +145,6 @@ function moveOn(direction) {
             move.down = true;
             move.left = true;
             break;
-
     };
 };
 
@@ -190,10 +184,10 @@ function detectCollision() {
 
     for (let index = 1; index < snake.length; index++) {
         const bodyPart = snake[index];
-        if (snakeHead.x == bodyPart.x &&
-            snakeHead.y == bodyPart.y) {
-            gameOver();
+        if (snakeHead.x === bodyPart.x &&
+            snakeHead.y === bodyPart.y) {
 
+            gameOver();
 
         };
     };
@@ -231,9 +225,6 @@ let appleX, appleY;
 function createApple() {
     const snakeHeadSize = document.querySelector("div").offsetWidth;
 
-    appleX = 3;
-    appleY = 3;
-
     let apple = document.createElement("span");
     gameSpace.appendChild(apple);
     apple.classList.add("appleStyle");
@@ -245,7 +236,6 @@ function createApple() {
     };
 
 
-
     while (
         (appleX % 20 != 0 || appleY % 20 != 0) ||
         (arrX.includes(appleX) && arrY.includes(appleY))
@@ -253,7 +243,6 @@ function createApple() {
         appleX = Math.floor(Math.random() * (gameWidth - snakeHeadSize));
         appleY = Math.floor(Math.random() * (gameHeight - snakeHeadSize));
     };
-
 
     apple.style.left = appleX + "px";
     apple.style.top = appleY + "px";
@@ -264,23 +253,24 @@ createApple();
 //add new bodypart when apple was eaten
 function appleEaten() {
 
-
     let snakeHead = snake[0];
 
-    if (snakeHead.x == appleX && snakeHead.y == appleY) {
+    if (snakeHead.x === appleX && snakeHead.y === appleY) {
 
         eatSound.play();
 
+        //add body part to the snake
         let newX = snake[snake.length - 1].lkpX;
         let newY = snake[snake.length - 1].lkpY;
         snake.push(new BodyPart(newX, newY));
-        let newPart = document.createElement("div");
 
+        let newPart = document.createElement("div");
         gameSpace.appendChild(newPart);
 
+        //remove old apple
         let apple = gameSpace.querySelector("span");
-        addAndUpdateScore();
         apple.remove();
+        addAndUpdateScore();
         createApple();
     };
 };
@@ -297,14 +287,12 @@ function gameRestart() {
 
     if (gameState.current === gameState.over) {
 
-        let h1 = document.querySelector("h1");
-        let h4Container = document.querySelector(".h4Container");
-        let divs = document.querySelectorAll("div");
+        let snakeBody = document.querySelectorAll("div");
 
         //remove all divs over the initial 5
-        if (divs.length > 5) {
-            for (let index = 5; index < divs.length; index++) {
-                const element = divs[index];
+        if (snakeBody.length > 5) {
+            for (let index = 5; index < snakeBody.length; index++) {
+                const element = snakeBody[index];
 
                 gameSpace.removeChild(element);
 
@@ -312,8 +300,8 @@ function gameRestart() {
         };
 
         //remove game over message
-        h1.remove();
-        h4Container.remove();
+        document.querySelector("h1").remove();
+        h4Container = document.querySelector(".h4Container").remove();
 
         //set initial direction and remove the apple
         direction = "up"
@@ -338,7 +326,7 @@ function gameRestart() {
         createApple();
         lkpUpdate();
 
-        //change game state
+        //change game state to running
         gameState.current = gameState.running;
 
         gameStart();
