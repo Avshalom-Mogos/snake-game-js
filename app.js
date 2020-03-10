@@ -362,9 +362,8 @@ function sound(src) {
         this.sound.pause();
     }
 }
-
-const soundUrl = "https://raw.githubusercontent.com/avshalom-mogos/snake-game-js/master"
-const eatSound = new sound(`${soundUrl}/sounds/appleEaten.wav`);
-const gameoverSound = new sound(`${soundUrl}/sounds/gameover.wav`);
+const soundUrl = "https://raw.githubusercontent.com/avshalom-mogos/snake-game-js/master/assets/audio"
+const eatSound = new sound(`${soundUrl}/appleEaten.wav`);
+const gameoverSound = new sound(`${soundUrl}/gameover.wav`);
 
 
