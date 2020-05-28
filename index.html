@@ -12,11 +12,10 @@
 
 <body>
 
-
     <span id="header">
         <button id="startBtn">START</button>
         <p>Score:
-            <p id="scoreDisplay">0</p>
+        <p id="scoreDisplay">0</p>
         </p>
         <button id="restartBtn">RESTART</button>
     </span>
@@ -30,18 +29,18 @@
 
     <span id="btnContainer">
         <span id="spanUpBtn">
-             <button onclick="inputHandler(38)">&#x2191;</button>
-             <!--UP-->
+            <!--UP-->
+            <button onclick="inputHandler(38)">&#x2191;</button>
         </span>
         <span id="spanLeftRightBtn">
+            <!--LEFT-->
             <button onclick="inputHandler(37)">&#x2190;</button>
-             <!--LEFT-->
+            <!--RIGHT-->
             <button onclick="inputHandler(39)">&#x2192;</button>
-             <!--RIGHT-->
         </span>
         <span id="spanDownBtn">
-            <button onclick="inputHandler(40)">&#x2193;</button>
             <!--DOWN-->
+            <button onclick="inputHandler(40)">&#x2193;</button>
         </span>
     </span>
     <script src="app.js"></script>

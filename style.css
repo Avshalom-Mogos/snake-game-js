@@ -109,6 +109,11 @@ button {
 	color: black;
 	background-color: red;
 	border: none;
+	cursor: pointer;
+}
+
+button:active{
+	background-color: white;
 }
 
 @media (max-width: 440px) {
