@@ -110,6 +110,7 @@ button {
 	background-color: red;
 	border: none;
 	cursor: pointer;
+	outline: none;
 }
 
 button:active{
