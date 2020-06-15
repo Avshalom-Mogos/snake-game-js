@@ -8,7 +8,7 @@ live link: https://avshalom-mogos.github.io/snake-game-js/
 - JavaScript
 
 ## Illustration
-<img src="https://raw.githubusercontent.com/Avshalom-Mogos/snake-game-js/master/readmeIMG.JPG" width="500"/>
+<img src="https://raw.githubusercontent.com/Avshalom-Mogos/portfolio/master/src/assests/GIFs/snake.gif"/>
 
 ## How to use?
 - Click the arrow buttons on screen or use the arrow keys on the keyboard.
