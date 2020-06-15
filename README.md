@@ -1,6 +1,6 @@
 # Introduction
 Snake game  
-live link: https://avshalom-mogos.github.io/snake-game-js/
+Link: https://avshalom-mogos.github.io/snake-game-js/
 
 ## Technologies
 - HTML5
