@@ -3,8 +3,8 @@ Snake game
 live link: https://avshalom-mogos.github.io/snake-game-js/
 
 ## Technologies
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
 
 ## Illustration
@@ -12,7 +12,7 @@ live link: https://avshalom-mogos.github.io/snake-game-js/
 
 ## How to use?
 - Click the arrow buttons on screen or use the arrow keys on the keyboard.
-- Eat the apples to make the snake grow!
+- Eat the apple to make the snake grow!
 
 
 
