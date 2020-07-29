@@ -8,7 +8,7 @@ let score, direction, snake, appleX, appleY;
 
 
 
-//add events to start and restart buttons
+//add click events to start and restart buttons
 const startBtn = document.querySelector('#startBtn');
 const restartBtn = document.querySelector('#restartBtn');
 
@@ -18,6 +18,23 @@ startBtn.onclick = function () {
 };
 
 restartBtn.onclick = function () { gameRestart() };
+
+
+//add click events to arrow buttons
+const [
+    upArrow,
+    leftArrow,
+    rightArrow,
+    downArrow
+] = document.querySelectorAll('#btnContainer button');
+
+upArrow.onclick = function () { inputHandler(38) };
+leftArrow.onclick = function () { inputHandler(37) };
+rightArrow.onclick = function () { inputHandler(39) };
+downArrow.onclick = function () { inputHandler(40) };
+
+
+
 
 //catch key press
 body.onkeydown = function (e) { inputHandler(e.keyCode) };
@@ -32,7 +49,7 @@ const gameState = {
 //update divs position on the dom
 function updatePosition() {
 
-    let divs = document.querySelectorAll('div');
+    const divs = document.querySelectorAll('div');
     for (let i = 0; i < divs.length; i++) {
 
         divs[i].style.left = (snake[i].x) + 'px';
@@ -276,7 +293,7 @@ function gameRestart() {
 
         //remove game over message
         document.querySelector('h1').remove();
-        h4Container = document.querySelector('.h4Container').remove();
+        document.querySelector('.h4Container').remove();
 
         //set initial direction and remove the apple
 
